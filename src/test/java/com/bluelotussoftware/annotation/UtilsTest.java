@@ -1,4 +1,5 @@
 /*
+ * Copyright 2016 Blue Lotus Software, LLC.
  * Copyright 2015 John Yeary <jyeary@bluelotussoftware.com>.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +17,8 @@
 package com.bluelotussoftware.annotation;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import org.junit.Test;
@@ -24,7 +27,7 @@ import static org.junit.Assert.*;
 /**
  *
  * @author John Yeary <jyeary@bluelotussoftware.com>
- * @version 1.0
+ * @version 2.0
  */
 public class UtilsTest {
 
@@ -112,6 +115,49 @@ public class UtilsTest {
         Object object = new A();
         boolean result = Utils.destroy(object);
         assertFalse(result);
+    }
+
+    @Test
+    public void testDestroyMap() throws SecurityException, IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException {
+        System.out.println("destroy() called on Map<String,Object>()");
+
+        Map<String, Object> map = new HashMap<>();
+
+        class A {
+
+            @PreDestroy
+            private void destroy() {
+                System.out.println("@PreDestroy invoked!");
+            }
+        }
+
+        class B {
+
+            public void destroy() {
+                System.out.println("destroy() invoked!");
+            }
+        }
+
+        map.put("A", new A());
+        map.put("B", new B());
+        Utils.destroy(map);
+    }
+
+    @Test
+    public void testDestroyNullMap() throws SecurityException, IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException {
+        System.out.println("destroy() called on a null Map<String,Object>()");
+        Map<String, Object> map = null;
+        Utils.destroy(map);
+    }
+
+    @Test
+    public void testDestroyEmptyMap() throws SecurityException, IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException {
+        System.out.println("destroy() called on an empty Map<String,Object>()");
+        Map<String, Object> map = new HashMap<>();
+        Utils.destroy(map);
     }
 
 }
