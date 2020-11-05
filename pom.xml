@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.bluelotussoftware</groupId>
     <artifactId>predestroy-annotation-processing</artifactId>
-    <version>2.0</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
     <name>PreDestroy Annotation Processing</name>
     <description>Determines if a method has @PreDestroy annotation, 
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
